@@ -1,9 +1,14 @@
-﻿@page "/"
+﻿@using lib;
+@page "/"
+@code{
+    Class1 bean = new Class1();
+}
 
 <PageTitle>Index</PageTitle>
 
 <h1>Hello, world!</h1>
-
+<h1>@bean.thing</h1>
+<button @onclick='bean.rename'> Yo, test this thing man</button>
 Welcome to your new app.
 
 <SurveyPrompt Title="How is Blazor working for you?" />
