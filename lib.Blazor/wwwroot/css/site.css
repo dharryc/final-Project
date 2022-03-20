@@ -9,12 +9,12 @@ h1:focus {
 }
 
 a, .btn-link {
-    color: #0071c1;
+    color: #005999;
 }
 
 .btn-primary {
-    color: #fff;
-    background-color: #1b6ec2;
+    color: rgb(255, 255, 255);
+    background-color: #0d365f;
     border-color: #1861ac;
 }
 
@@ -35,7 +35,7 @@ a, .btn-link {
 }
 
 #blazor-error-ui {
-    background: lightyellow;
+    background: rgb(182, 39, 29);
     bottom: 0;
     box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
     display: none;

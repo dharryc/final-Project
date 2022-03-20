@@ -1,7 +1,29 @@
 ﻿@using lib;
+@using System.Collections.Generic;
 @page "/"
-@code{
-    Class1 bean = new Class1();
+@code {
+    playerData bean = new playerData();
+    playerData newBean = new playerData();
+    public int repetition = 0;
+    List<playerData> playerBase = new List<playerData>();
+    public void doAdd()
+    {
+        for (int i = 0; i < playerBase.Count; i++)
+        {
+            for (int z = 0; z < playerBase.Count; z++)
+            {
+                if (playerBase[z] == playerBase[i])
+                {
+                    repetition = 2;
+                }
+            }
+        }
+        if (repetition == 0)
+        {
+            playerBase.Add(bean);
+            playerBase.Add(newBean);
+        }
+    }
 }
 
 <PageTitle>Index</PageTitle>
@@ -9,6 +31,24 @@
 <h1>Hello, world!</h1>
 <h1>@bean.thing</h1>
 <button @onclick='bean.rename'> Yo, test this thing man</button>
+<button @onclick='doAdd'> Yo, let's make some new buttons</button>
 Welcome to your new app.
+<h1></h1>
+@if (repetition == 0)
+{
+    <button><a href="users">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="24" fill="currentColor" class="bi bi-people-fill"
+            viewBox="0 0 16 16">
+            <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+            <path fill-rule="evenodd"
+                d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z" />
+            <path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z" />
+        </svg>
+    </a></button>
+}
+@foreach (playerData player in playerBase)
+{
+    <button @onclick='player.rename'> @player.thing</button>
+}
 
 <SurveyPrompt Title="How is Blazor working for you?" />
