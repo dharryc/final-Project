@@ -6,6 +6,11 @@
     playerData newBean = new playerData();
     public int repetition = 0;
     List<playerData> playerBase = new List<playerData>();
+    public void newobj()
+    {
+        playerData thing = new playerData();
+        playerBase.Add(thing);
+    }
     public void doAdd()
     {
         for (int i = 0; i < playerBase.Count; i++)
@@ -22,6 +27,7 @@
         {
             playerBase.Add(bean);
             playerBase.Add(newBean);
+            repetition++;
         }
     }
 }
@@ -32,6 +38,7 @@
 <h1>@bean.thing</h1>
 <button @onclick='bean.rename'> Yo, test this thing man</button>
 <button @onclick='doAdd'> Yo, let's make some new buttons</button>
+<button @onclick='newobj'>Please let this work</button>
 Welcome to your new app.
 <h1></h1>
 @if (repetition == 0)
