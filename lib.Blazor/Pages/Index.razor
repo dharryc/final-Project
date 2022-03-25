@@ -3,31 +3,22 @@
 @page "/"
 @code {
     public string userName;
-    public string errorTime;
-    List<playerData> playerBase = new List<playerData>();
+    public string error;
+    public static players Base = new();
     public void doAdd()
     {
-        if (userName != null)
-        {
-            playerBase.Add(new playerData(userName));
-            errorTime = null;
-        }
-        else
-        {
-            errorTime = "You IMBICILE! YOU FOOL!!! ENTER A REAL NAME!!!";
-        }
+        Base.Add(new playerData(userName), userName);
     }
 }
 
+
 <PageTitle>Index</PageTitle>
 
-<h1>Hello, world!</h1>
+<h1>Hello, welcome to this chess program!</h1>
+<p>Please enter a username greater than 3 characters to start your experience!</p>
 <input type='text' @bind='userName'>
-<p>@errorTime</p><br />
-<button @onclick='doAdd'> Yo, let's make some new buttons</button>
-Welcome to your new app.
-<h1></h1>
-@foreach (playerData user in playerBase)
+<button @onclick='doAdd'>Enter userName</button> <p>@Base.errorTime</p>
+@foreach (playerData user in Base.playerBase)
 {
     <h1>@user.userName</h1>
 }
@@ -43,7 +34,7 @@ Welcome to your new app.
     </svg>
     </a></button>
     } *@
-@* @foreach (playerData player in playerBase)
+@* @foreach (makePlayer player in playerBase)
     {
     <button @onclick='player.rename'> @player.thing</button>
     } *@
