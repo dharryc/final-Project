@@ -10,8 +10,15 @@ public class Tests
     }
 
     [Test]
-    public void Test1()
+    public void AddSingleMoveGame()
     {
-        Assert.Pass();
+        string[] game = new string[15] {" ", " ", " "," ", " ", " "," ", " ", " "," ", " ", " "," ", " ", " "};
+        playerData Harry = new playerData("Harry");
+        Harry.addMove("1. e4 d6");
+        Harry.addMove("1. e4 d7");
+        Harry.addMove("1. e4 d8");
+        Assert.AreEqual("1. e4 d6", Harry.currentgame[0]);
+        Harry.addGame();
+        Assert.AreEqual("1. e4 d6 1. e4 d7 1. e4 d8", Harry.getGameAt(0));
     }
 }

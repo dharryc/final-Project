@@ -1,8 +1,10 @@
 @page "/users"
+@using lib;
+@using System.Collections.Generic;
 
-<h1>Counter</h1>
-<p>The counter value is @currentCount</p>
+<h1>Users</h1>
 
-@code {
-     private int currentCount= 42;
+@foreach (playerData user in players.playerBase)
+{
+     <p>@user.userName</p>
 }

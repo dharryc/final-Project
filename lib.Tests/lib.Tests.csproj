@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\lib\lib.csproj" />
+    <ProjectReference Include="..\lib.Blazor\lib.Blazor.csproj" />
   </ItemGroup>
 
 </Project>

@@ -4,10 +4,9 @@
 @code {
     public string userName;
     public string error;
-    public static players Base = new();
     public void doAdd()
     {
-        Base.Add(new playerData(userName), userName);
+        players.Add(new playerData(userName), userName);
     }
 }
 
@@ -15,26 +14,23 @@
 <PageTitle>Index</PageTitle>
 
 <h1>Hello, welcome to this chess program!</h1>
-<p>Please enter a username greater than 3 characters to start your experience!</p>
+<p>Please enter a username greater than 2 characters to start your experience!</p>
 <input type='text' @bind='userName'>
-<button @onclick='doAdd'>Enter userName</button> <p>@Base.errorTime</p>
-@foreach (playerData user in Base.playerBase)
+<button @onclick='doAdd'>Enter userName</button>
+<p>@players.errorTime</p>
+@foreach (playerData user in players.playerBase)
 {
-    <h1>@user.userName</h1>
+    <p>@user.userName</p>
 }
-@* @if (repetition == 0)
-    {
+@if (players.thing == 1)
+{
     <button><a href="users">
-    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="24" fill="Black" class="bi bi-people-fill"
-    viewBox="0 0 16 16">
-    <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-    <path fill-rule="evenodd"
-    d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z" />
-    <path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z" />
-    </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="24" fill="Black" class="bi bi-people-fill"
+            viewBox="0 0 16 16">
+            <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+            <path fill-rule="evenodd"
+                d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z" />
+            <path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z" />
+        </svg>
     </a></button>
-    } *@
-@* @foreach (makePlayer player in playerBase)
-    {
-    <button @onclick='player.rename'> @player.thing</button>
-    } *@
+}
