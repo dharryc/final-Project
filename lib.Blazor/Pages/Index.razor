@@ -3,10 +3,29 @@
 @page "/"
 @code {
     public string userName;
-    public string error;
     public void doAdd()
     {
-        players.Add(new playerData(userName), userName);
+        if (userName != null)
+        {
+            if (userName.Length >= 2)
+            {
+                players.Add(new playerData(userName), userName);
+                players.errorTime = $"Username successfully entered!";
+                players.displayPlayers = true;
+            }
+            else
+            {
+                players.errorTime = "That name is too short";
+            }
+        }
+        else
+        {
+            players.errorTime = "Oi! Don't give me any of that null bull****";
+        }
+    }
+    public void story()
+    {
+        storage.store();
     }
 }
 
@@ -16,13 +35,10 @@
 <h1>Hello, welcome to this chess program!</h1>
 <p>Please enter a username greater than 2 characters to start your experience!</p>
 <input type='text' @bind='userName'>
-<button @onclick='doAdd'>Enter userName</button>
+<button @onclick='doAdd'>Enter Username</button>
+<p></p>
 <p>@players.errorTime</p>
-@foreach (playerData user in players.playerBase)
-{
-    <p>@user.userName</p>
-}
-@if (players.thing == 1)
+@if (players.displayPlayers)
 {
     <button><a href="users">
         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="24" fill="Black" class="bi bi-people-fill"
@@ -31,6 +47,8 @@
             <path fill-rule="evenodd"
                 d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z" />
             <path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z" />
-        </svg>
+        </svg> Users
     </a></button>
 }
+<p></p>
+<button @onclick='story'>Store all usernames to a text file</button>
