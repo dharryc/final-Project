@@ -30,7 +30,7 @@ public class playerData : ChessGame, IaddGames
     {
         games.Add(currentGame);
         gamecount++;
-        currentGame.Clear();
+        currentGame = new List<string>();
     }
     public void WholeGame(string f)
     {
