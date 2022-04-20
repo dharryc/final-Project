@@ -17,5 +17,4 @@ public static class players
             errorTime = "That name is too short";
         }
     }
-
 }

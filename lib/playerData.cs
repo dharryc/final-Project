@@ -6,10 +6,8 @@ public class playerData : ChessGame, IaddGames
     public int playerCode;
     public string userName;
     public int gamecount = 0;
-    public string displayedGame;
-    public static string y;
     public List<List<string>> games = new List<List<string>>();
-    public List<string> currentgame = new List<string>();
+    public List<string> currentGame = new List<string>();
     public override string getGameAt(int i)
     {
         List<string> gotGame = games[i];
@@ -26,19 +24,20 @@ public class playerData : ChessGame, IaddGames
     }
     public void addMove(string f)
     {
-        currentgame.Add(f);
+        currentGame.Add(f);
     }
     public void addGame()
     {
-        games.Add(currentgame);
+        games.Add(currentGame);
         gamecount++;
+        currentGame.Clear();
     }
     public void WholeGame(string f)
     {
         string[] wholeGame = f.Split(' ');
         for (int i = 0; i < wholeGame.Length; i++)
         {
-            currentgame.Add(wholeGame[i]);
+            currentGame.Add(wholeGame[i]);
         }
         addGame();
     }
