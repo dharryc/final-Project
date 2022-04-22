@@ -3,6 +3,12 @@
 @page "/"
 @code {
     public string userName;
+    protected override void OnInitialized()
+    {
+        players.SetStorageService(new storage());
+        players.RecoverPlayers();
+    }
+
     public void doAdd()
     {
         if (userName != null)
@@ -23,9 +29,9 @@
             players.errorTime = "Oi! Don't give me a null value! That's mean";
         }
     }
-    public void story()
+    public void dataStore()
     {
-        storage.store();
+        players.SavePlayers();
     }
 }
 
@@ -51,4 +57,4 @@
     </a></button>
 }
 <p></p>
-<button @onclick='story'>Store all usernames to a text file</button>
+<button @onclick="players.SavePlayers">Store all users</button>

@@ -2,12 +2,12 @@ namespace lib;
 
 public class playerData : ChessGame, IaddGames
 {
-    public static int totalUserCount;
-    public int playerCode;
-    public string userName;
-    public int gamecount = 0;
-    public List<List<string>> games = new List<List<string>>();
-    public List<string> currentGame = new List<string>();
+    public static int totalUserCount = players.playerBase.Count;
+    public int playerCode { get; set; }
+    public string userName { get; set; }
+    public int gamecount { get; set; } = 0;
+    public List<List<string>> games { get; set; } = new List<List<string>>();
+    public List<string> currentGame { get; set; } = new List<string>();
     public override string getGameAt(int i)
     {
         List<string> gotGame = games[i];

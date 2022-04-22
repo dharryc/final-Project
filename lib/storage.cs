@@ -1,14 +1,25 @@
 namespace lib;
 using System;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
-public static class storage
+public interface IStorageService
 {
-    public static void store()
+    List<playerData> Load();
+    void Save(List<playerData> users);
+}
+public class storage : IStorageService
+{
+
+    public List<playerData> Load()
     {
-        using StreamWriter file = new("playerbase.txt");
-        foreach (playerData user in players.playerBase)
-        {
-            file.WriteLine(user.userName);
-        }
+        List<playerData>? list = JsonSerializer.Deserialize<List<playerData>>(File.ReadAllText("playerbase.json"));
+        return list;
+    }
+
+    public void Save(List<playerData> users)
+    {
+        string playerBasejson = JsonSerializer.Serialize(users);
+        File.WriteAllText("playerbase.json", playerBasejson);
     }
 }
