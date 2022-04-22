@@ -22,6 +22,7 @@ public class playerData : ChessGame, IaddGames
             totalUserCount++;
         }
     }
+    public playerData(){}
     public void addMove(string f)
     {
         currentGame.Add(f);

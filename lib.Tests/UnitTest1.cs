@@ -17,7 +17,7 @@ public class Tests
         Harry.addMove("1. e4 d6");
         Harry.addMove("1. e4 d7");
         Harry.addMove("1. e4 d8");
-        Assert.AreEqual("1. e4 d6", Harry.currentgame[0]);
+        Assert.AreEqual("1. e4 d6", Harry.currentGame[0]);
         Harry.addGame();
         Assert.AreEqual("1. e4 d6 1. e4 d7 1. e4 d8", Harry.getGameAt(0));
     }
@@ -29,7 +29,7 @@ public class Tests
         Harry.addMove("1. e4 d6");
         Harry.addMove("1. e4 d7");
         Harry.addMove("1. e4 d8");
-        Assert.AreEqual("1. e4 d6", Harry.currentgame[0]);
+        Assert.AreEqual("1. e4 d6", Harry.currentGame[0]);
         Harry.addGame();
         Assert.AreEqual("1. e4 d6 1. e4 d7 1. e4 d8", Harry.getGameAt(0));
     }
