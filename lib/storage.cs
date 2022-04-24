@@ -2,12 +2,6 @@ namespace lib;
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-
-public interface IStorageService
-{
-    List<playerData> Load();
-    void Save(List<playerData> users);
-}
 public class storage : IStorageService
 {
 
