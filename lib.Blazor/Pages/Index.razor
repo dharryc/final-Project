@@ -2,51 +2,29 @@
 @using System.Collections.Generic;
 @page "/"
 @code {
-    public string userName;
     protected override void OnInitialized()
     {
         players.SetStorageService(new storage());
-        players.RecoverPlayers();
+        if (File.Exists("playerbase.json"))
+            players.RecoverPlayers();
     }
-
-    public void doAdd()
-    {
-        if (userName != null)
-        {
-            if (userName.Length >= 2)
-            {
-                players.Add(new playerData(userName), userName);
-                players.errorTime = $"Username successfully entered!";
-                players.displayPlayers = true;
-            }
-            else
-            {
-                players.errorTime = "That name is too short";
-            }
-        }
-        else
-        {
-            players.errorTime = "Oi! Don't give me a null value! That's mean";
-        }
-    }
-    public void dataStore()
-    {
-        players.SavePlayers();
-    }
+}
+@if (players.playerBase.Count > 0)
+{
+    players.displayPlayers = true;
 }
 
 
 <PageTitle>Index</PageTitle>
-
-<h1>Hello, welcome to this chess program!</h1>
+<h1>Welcome!</h1>
 <p>Please enter a username greater than 2 characters to start your experience!</p>
-<input type='text' @bind='userName'>
-<button @onclick='doAdd'>Enter Username</button>
+<input type='text' @bind='indexLogic.userName'>
+<button @onclick='indexLogic.doAdd'>Enter Username</button>
 <p></p>
 <p>@players.errorTime</p>
 @if (players.displayPlayers)
 {
-    <button><a href="users">
+    <button @onclick='indexLogic.clear'><a href="users">
         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="24" fill="Black" class="bi bi-people-fill"
             viewBox="0 0 16 16">
             <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
@@ -57,4 +35,21 @@
     </a></button>
 }
 <p></p>
-<button @onclick="players.SavePlayers">Store all users</button>
+@if (players.NewPlayer)
+{
+    <button @onclick="players.SavePlayers">Store all users</button>
+}
+<p></p>
+@if (players.playerBase.Count > 0)
+{
+    <button @onclick='indexLogic.Confirm'>Delete all users</button>
+    if (indexLogic.check)
+    {
+        <p></p>
+        <p>Only procede if you want to delete all users</p>
+        <p></p>
+        <button @onclick='indexLogic.deleteJson'>Really, delete all users</button>
+        <p></p>
+        <button @onclick='indexLogic.cancel'>Cancel</button>
+    }
+}

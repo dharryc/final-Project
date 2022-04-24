@@ -2,103 +2,7 @@
 @using lib;
 @using System.Collections.Generic;
 
-@code {
-     public string thing;
-     public bool options = false;
-     public string error = null;
-     public bool gameShow = false;
-     public bool singleUser = false;
-     public bool moveByMove = false;
-     public int playerSelection;
-     public bool entireGame = false;
-     public string game;
-     public void select()
-     {
-          try
-          {
-               playerSelection = Int32.Parse(thing);
-               if (playerSelection <= playerData.totalUserCount)
-               {
-                    error = null;
-                    singleUser = true;
-                    options = true;
-                    moveByMove = false;
-                    gameShow = false;
-                    entireGame = false;
-               }
-               else
-               {
-                    error = "You buffoon! Enter a number within the bounds!";
-               }
-          }
-          catch
-          {
-               error = "You buffoon! Enter a number!";
-          }
-     }
-     public void show()
-     {
-          gameShow = true;
-          options = false;
-     }
-     public void hide()
-     {
-          singleUser = false;
-     }
-     public void singleMove()
-     {
-          moveByMove = true;
-          gameShow = false;
-          entireGame = false;
-          options = false;
-     }
-     public void entireMove()
-     {
-          entireGame = true;
-          gameShow = false;
-          moveByMove = false;
-          options = false;
-     }
-     public void backToSingleUser()
-     {
-          options = true;
-          moveByMove = false;
-          gameShow = false;
-          entireGame = false;
-     }
-     public void oneMove()
-     {
-          foreach (playerData user in players.playerBase)
-          {
-               if (user.playerCode == playerSelection)
-               {
-                    user.addMove(thing);
-               }
-          }
-     }
-     public void appendGame()
-     {
-          foreach (playerData user in players.playerBase)
-          {
-               if (user.playerCode == playerSelection)
-               { 
-                    user.addGame();
-               }
-          }
-     }
-     public void appendWholeGame()
-     {
-         foreach (playerData user in players.playerBase)
-          {
-               if (user.playerCode == playerSelection)
-               { 
-                    user.WholeGame(thing);
-                    thing = "";
-               }
-          } 
-     }
-}
-@if (!singleUser)
+@if (!UserPageNavigation.singleUser)
 {
      <h1>Users</h1>
      foreach (playerData user in players.playerBase)
@@ -106,26 +10,29 @@
           <p>@user.playerCode @user.userName </p>
      }
      <p></p>
-     <input type='text' @bind='thing'>
-     <button @onclick='select'>Select the user you would like to view</button>
-     <p>@error</p>
+     <input type='text' @bind='UserPageNavigation.thing'>
+     <p>@UserPageNavigation.error</p>
+     <button @onclick='UserPageNavigation.select'>Select the user you would like to view</button>
 }
-@if (singleUser)
+@if (UserPageNavigation.singleUser)
 {
      foreach (playerData user in players.playerBase)
      {
-          if (user.playerCode == playerSelection)
+          if (user.playerCode == UserPageNavigation.playerSelection)
           {
                <h1>@user.userName</h1>
-               if (options)
+               if (UserPageNavigation.options)
                {
-                    <button @onclick='show'>Show all games</button>
+                    if (user.gamecount > 0)
+                    {
+                         <button @onclick='UserPageNavigation.show'>Show all games</button>
+                    }
                     <p></p>
-                    <button @onclick='singleMove'>Add game move at a time</button>
+                    <button @onclick='UserPageNavigation.singleMove'>Add game move at a time</button>
                     <p></p>
-                    <button @onclick='entireMove'>Add entire game</button>
+                    <button @onclick='UserPageNavigation.entireMove'>Add entire game</button>
                }
-               if (gameShow)
+               if (UserPageNavigation.gameShow)
                {
                     <p>Showing all @user.userName's games</p>
                     for (int i = 0; i < user.gamecount; i++)
@@ -133,28 +40,38 @@
                          <p>@user.getGameAt(i)</p>
                          <p></p>
                     }
-                    <button @onclick='backToSingleUser'>Back to user menu</button>
+                    <button @onclick='UserPageNavigation.backToSingleUser'>Back to user menu</button>
                }
-               if (moveByMove)
+               if (UserPageNavigation.moveByMove)
                {
-                    <input type='text' @bind='thing'>
-                    <button @onclick='oneMove'>Enter move</button>
+                    <input type='text' @bind='UserPageNavigation.thing'>
+                    <p>@UserPageNavigation.error</p>
+                    <button @onclick='UserPageNavigation.oneMove'>Enter move</button>
                     <p></p>
-                    <button @onclick='appendGame'>Game finished</button>
+                    if (user.currentGame.Count > 0)
+                    {
+                         <button @onclick='UserPageNavigation.appendGame'>Game finished</button>
+                    }
                     <p></p>
-                    <button @onclick='backToSingleUser'>Back to user menu</button>
+                    <button @onclick='UserPageNavigation.backToSingleUser'>Back to user menu</button>
                }
-               if (entireGame)
+               if (UserPageNavigation.entireGame)
                {
                     <p>Enter the entire game into the text box</p>
                     <p></p>
-                    <input type='text' @bind='thing'>
+                    <input type='text' @bind='UserPageNavigation.thing'>
+                    <p>@UserPageNavigation.error</p>
+                    <button @onclick='UserPageNavigation.appendWholeGame'>Add game</button>
                     <p></p>
-                    <button @onclick='appendWholeGame'>Add game</button>
-                    <button @onclick='backToSingleUser'>Back to user menu</button>
+                    <button @onclick='UserPageNavigation.backToSingleUser'>Back to user menu</button>
                }
           }
      }
      <p></p>
-     <button @onclick='hide'>Show all users</button>
+     <button @onclick='UserPageNavigation.hide'>Show all users</button>
+}
+<p></p>
+@if (UserPageNavigation.gameadd)
+{
+     <button @onclick='UserPageNavigation.noNewGame'>Save new playerdata</button>
 }
