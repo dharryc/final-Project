@@ -2,6 +2,17 @@
 @using lib;
 @using System.Collections.Generic;
 
+@code
+{
+        protected override void OnInitialized()
+        {
+            if(players.playerBase.Count <= 1)
+            {
+                 UserPageNavigation.singleUser = true;
+                 UserPageNavigation.playerSelection = 0;
+            }
+        }
+}
 @if (!UserPageNavigation.singleUser)
 {
      <h1>Users</h1>
@@ -74,4 +85,7 @@
 @if (UserPageNavigation.gameadd)
 {
      <button @onclick='UserPageNavigation.noNewGame'>Save new playerdata</button>
-}
+}#pragma warning restore 1998
+#nullable restore
+#line 6 "/home/beast/code/final-Project/lib.Blazor/Pages/Users.razor"
+
