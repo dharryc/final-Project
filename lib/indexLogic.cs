@@ -17,7 +17,7 @@ public static class indexLogic
                 if (userName.Length > 2)
                 {
                     players.Add(new playerData(userName), userName);
-                    players.errorTime = $"Username successfully entered!";
+                    players.errorTime = "Username successfully entered!";
                     players.NewPlayer = true;
                     userName = "";
                 }
@@ -44,9 +44,12 @@ public static class indexLogic
         {
             for (int j = 0; i < playerData.totalUserCount; i++)
             {
-                if (players.playerBase[j].userName == players.playerBase[i].userName)
+                if (i != j)
                 {
-                    RepeatUser = true;
+                    if (players.playerBase[j].userName == players.playerBase[i].userName)
+                    {
+                        RepeatUser = true;
+                    }
                 }
             }
         }
