@@ -1,27 +1,28 @@
 ﻿@using lib;
 @page "/"
-@code {
+@code
+{
     protected override void OnInitialized()
     {
-        players.SetStorageService(new storage());
+        Players.SetStorageService(new Storage());
         if (File.Exists("playerbase.json"))
-            players.RecoverPlayers();
+            Players.RecoverPlayers();
     }
 }
-@if (players.playerBase.Count > 0)
+@if (Players.PlayerBase.Count > 0)
 {
-    players.displayPlayers = true;
+    Players.DisplayPlayers = true;
 }
 
 
 <PageTitle>Index</PageTitle>
 <h1>Welcome!</h1>
 <p>Please enter a username greater than 2 characters to start your experience!</p>
-<input type='text' @bind='indexLogic.userName'>
+<input type='text' @bind='indexLogic.UserName'>
 <button @onclick='indexLogic.doAdd'>Enter Username</button>
 <p></p>
-<p>@players.errorTime</p>
-@if (players.displayPlayers)
+<p>@Players.ErrorMessage</p>
+@if (Players.DisplayPlayers)
 {
     <button @onclick='indexLogic.clear'><a href="users">
         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="24" fill="Black" class="bi bi-people-fill"
@@ -34,15 +35,15 @@
     </a></button>
 }
 <p></p>
-@if (players.NewPlayer)
+@if (Players.NewPlayer)
 {
-    <button @onclick="players.SavePlayers">Store all users</button>
+    <button @onclick="Players.SavePlayers">Store all users</button>
 }
 <p></p>
-@if (players.playerBase.Count > 0)
+@if (Players.PlayerBase.Count > 0)
 {
     <button @onclick='indexLogic.Confirm'>Delete all users</button>
-    if (indexLogic.check)
+    if (indexLogic.ConfirmDelete)
     {
         <p></p>
         <p>Only procede if you want to delete all users</p>

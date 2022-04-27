@@ -1,17 +1,17 @@
 ﻿namespace lib;
 public interface IaddGames
 {
-    public void findGame(int game, playerData player)
+    public void FindGame(int game, PlayerData player)
     {
-        player.getGameAt(game);
+        player.GetGameAt(game);
     }
 }
 public abstract class ChessGame
 {
-    public abstract string getGameAt(int i);
+    public abstract string GetGameAt(int i);
 }
 public interface IStorageService
 {
-    List<playerData> Load();
-    void Save(List<playerData> users);
+    List<PlayerData> Load();
+    void Save(List<PlayerData> users);
 }

@@ -1,52 +1,52 @@
 namespace lib;
 public static class indexLogic
 {
-    public static string userName;
-    public static bool check = false;
+    public static string UserName;
+    public static bool ConfirmDelete = false;
     public static bool RepeatUser = true;
 
     public static void doAdd()
     {
-        players.errorTime = "";
+        Players.ErrorMessage = "";
         RepeatUser = false;
         multiple();
-        if (userName != null)
+        if (UserName != null)
         {
             if (!RepeatUser)
             {
-                if (userName.Length > 2)
+                if (UserName.Length > 2)
                 {
-                    players.Add(new playerData(userName), userName);
-                    players.errorTime = "Username successfully entered!";
-                    players.NewPlayer = true;
-                    userName = "";
+                    Players.Add(new PlayerData(UserName), UserName);
+                    Players.ErrorMessage = "Username successfully entered!";
+                    Players.NewPlayer = true;
+                    UserName = "";
                 }
                 else
                 {
-                    players.errorTime = "That name is too short";
-                    userName = "";
+                    Players.ErrorMessage = "That name is too short";
+                    UserName = "";
                 }
             }
             else
             {
-                players.errorTime = "That username is already taken";
-                userName = "";
+                Players.ErrorMessage = "That username is already taken";
+                UserName = "";
             }
         }
         else
         {
-            players.errorTime = "Oi! Don't give me a null value! That's mean";
+            Players.ErrorMessage = "Oi! Don't give me a null value! That's mean";
         }
     }
     public static void multiple()
     {
-        for (int i = 0; i < playerData.totalUserCount; i++)
+        for (int i = 0; i < PlayerData.TotalUserCount; i++)
         {
-            for (int j = 0; i < playerData.totalUserCount; i++)
+            for (int j = 0; i < PlayerData.TotalUserCount; i++)
             {
                 if (i != j)
                 {
-                    if (players.playerBase[j].userName == players.playerBase[i].userName)
+                    if (Players.PlayerBase[j].UserName == Players.PlayerBase[i].UserName)
                     {
                         RepeatUser = true;
                     }
@@ -56,21 +56,21 @@ public static class indexLogic
     }
     public static void Confirm()
     {
-        check = true;
+        ConfirmDelete = true;
     }
     public static void cancel()
     {
-        check = false;
+        ConfirmDelete = false;
     }
     public static void deleteJson()
     {
-        players.DeleteJson();
-        check = false;
-        players.NewPlayer = false;
-        players.errorTime = "";
+        Players.DeleteJson();
+        ConfirmDelete = false;
+        Players.NewPlayer = false;
+        Players.ErrorMessage = "";
     }
     public static void clear()
     {
-        players.errorTime = "";
+        Players.ErrorMessage = "";
     }
 }

@@ -1,44 +1,44 @@
 namespace lib;
 
-public class playerData : ChessGame, IaddGames
+public class PlayerData : ChessGame, IaddGames
 {
-    public static int totalUserCount = players.playerBase.Count;
-    public int playerCode { get; set; }
-    public string userName { get; set; }
-    public int gamecount { get; set; } = 0;
-    public List<List<string>> games { get; set; } = new List<List<string>>();
-    public List<string> currentGame { get; set; } = new List<string>();
-    public override string getGameAt(int i)
+    public static int TotalUserCount = Players.PlayerBase.Count;
+    public int PlayerCode { get; set; }
+    public string UserName { get; set; }
+    public int GameCount { get; set; } = 0;
+    public List<List<string>> Games { get; set; } = new List<List<string>>();
+    public List<string> CurrentGame { get; set; } = new List<string>();
+    public override string GetGameAt(int i)
     {
-        List<string> gotGame = games[i];
+        List<string> gotGame = Games[i];
         return string.Join(" ", gotGame);
     }
-    public playerData(string thing)
+    public PlayerData(string thing)
     {
         if (thing != null && thing.Length > 2)
         {
-            userName = thing;
-            playerCode = totalUserCount;
-            totalUserCount++;
+            UserName = thing;
+            PlayerCode = TotalUserCount;
+            TotalUserCount++;
         }
     }
-    public playerData() { }
+    public PlayerData() { }
     public void addMove(string f)
     {
-        currentGame.Add(f);
+        CurrentGame.Add(f);
     }
     public void addGame()
     {
-        games.Add(currentGame);
-        gamecount++;
-        currentGame = new List<string>();
+        Games.Add(CurrentGame);
+        GameCount++;
+        CurrentGame = new List<string>();
     }
     public void WholeGame(string f)
     {
         string[] wholeGame = f.Split(' ');
         for (int i = 0; i < wholeGame.Length; i++)
         {
-            currentGame.Add(wholeGame[i]);
+            CurrentGame.Add(wholeGame[i]);
         }
         addGame();
     }

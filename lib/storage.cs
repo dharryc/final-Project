@@ -1,15 +1,15 @@
 namespace lib;
 using System.Text.Json;
-public class storage : IStorageService
+public class Storage : IStorageService
 {
 
-    public List<playerData> Load()
+    public List<PlayerData> Load()
     {
-        List<playerData>? list = JsonSerializer.Deserialize<List<playerData>>(File.ReadAllText("playerbase.json"));
+        List<PlayerData>? list = JsonSerializer.Deserialize<List<PlayerData>>(File.ReadAllText("playerbase.json"));
         return list;
     }
 
-    public void Save(List<playerData> users)
+    public void Save(List<PlayerData> users)
     {
         string playerBasejson = JsonSerializer.Serialize(users);
         File.WriteAllText("playerbase.json", playerBasejson);

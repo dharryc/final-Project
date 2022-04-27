@@ -1,22 +1,22 @@
 namespace lib;
 
-public static class players
+public static class Players
 {
     private static IStorageService StorageService;
     public static bool NewPlayer = false;
-    public static string errorTime;
-    public static bool displayPlayers = false;
-    public static List<playerData> playerBase { get; set; } = new List<playerData>();
-    public static void Add(playerData player, string userName)
+    public static string ErrorMessage;
+    public static bool DisplayPlayers = false;
+    public static List<PlayerData> PlayerBase { get; set; } = new List<PlayerData>();
+    public static void Add(PlayerData player, string userName)
     {
         if (userName.Length >= 2)
         {
-            playerBase.Add(player);
-            errorTime = null;
+            PlayerBase.Add(player);
+            ErrorMessage = null;
         }
         else
         {
-            errorTime = "That name is too short";
+            ErrorMessage = "That name is too short";
         }
     }
     public static void SetStorageService(IStorageService storageService)
@@ -25,12 +25,12 @@ public static class players
     }
     public static void SavePlayers()
     {
-        StorageService.Save(playerBase);
+        StorageService.Save(PlayerBase);
         NewPlayer = false;
     }
     public static void RecoverPlayers()
     {
-        playerBase = StorageService.Load();
+        PlayerBase = StorageService.Load();
     }
     public static void DeleteJson()
     {
@@ -38,8 +38,8 @@ public static class players
         {
             File.Delete("playerbase.json");
         }
-        playerBase = new List<playerData>();
-        displayPlayers = false;
-        playerData.totalUserCount = 0;
+        PlayerBase = new List<PlayerData>();
+        DisplayPlayers = false;
+        PlayerData.TotalUserCount = 0;
     }
 }

@@ -5,42 +5,42 @@
 {
      protected override void OnInitialized()
      {
-          if (players.playerBase.Count <= 1)
+          if (Players.PlayerBase.Count <= 1)
           {
-               UserPageNavigation.singleUser = true;
-               UserPageNavigation.playerSelection = 0;
-               UserPageNavigation.options = true;
+               UserPageNavigation.ShowSingleUser = true;
+               UserPageNavigation.SelectedPlayer = 0;
+               UserPageNavigation.ShowNavButtons = true;
           }
-          if (players.playerBase.Count > 1)
+          if (Players.PlayerBase.Count > 1)
           {
-               UserPageNavigation.singleUser = false;
-               UserPageNavigation.options = false;
+               UserPageNavigation.ShowSingleUser = false;
+               UserPageNavigation.ShowNavButtons = false;
           }
      }
 }
-@if (!UserPageNavigation.singleUser)
+@if (!UserPageNavigation.ShowSingleUser)
 {
      <h1>Users</h1>
-     foreach (playerData user in players.playerBase)
+     foreach (PlayerData user in Players.PlayerBase)
      {
-          <p>@user.playerCode) @user.userName </p>
+          <p>@user.PlayerCode) @user.UserName </p>
      }
      <p></p>
-     <input type='text' @bind='UserPageNavigation.thing'>
-     <p>@UserPageNavigation.error</p>
+     <input type='text' @bind='UserPageNavigation.UserInput'>
+     <p>@UserPageNavigation.ErrorMessage</p>
      <p>Enter the user number to select the user</p>
      <button @onclick='UserPageNavigation.select'>Select user</button>
 }
-@if (UserPageNavigation.singleUser)
+@if (UserPageNavigation.ShowSingleUser)
 {
-     foreach (playerData user in players.playerBase)
+     foreach (PlayerData user in Players.PlayerBase)
      {
-          if (user.playerCode == UserPageNavigation.playerSelection)
+          if (user.PlayerCode == UserPageNavigation.SelectedPlayer)
           {
-               <h1>@user.userName</h1>
-               if (UserPageNavigation.options)
+               <h1>@user.UserName</h1>
+               if (UserPageNavigation.ShowNavButtons)
                {
-                    if (user.gamecount > 0)
+                    if (user.GameCount > 0)
                     {
                          <button @onclick='UserPageNavigation.show'>Show all games</button>
                     }
@@ -49,35 +49,35 @@
                     <p></p>
                     <button @onclick='UserPageNavigation.entireMove'>Add entire game</button>
                }
-               if (UserPageNavigation.gameShow)
+               if (UserPageNavigation.GameShow)
                {
-                    <p>Showing all @user.userName's games</p>
-                    for (int i = 0; i < user.gamecount; i++)
+                    <p>Showing all @user.UserName's games</p>
+                    for (int i = 0; i < user.GameCount; i++)
                     {
-                         <p>@user.getGameAt(i)</p>
+                         <p>@user.GetGameAt(i)</p>
                          <p></p>
                     }
                     <button @onclick='UserPageNavigation.backToSingleUser'>Back to user menu</button>
                }
-               if (UserPageNavigation.moveByMove)
+               if (UserPageNavigation.AddGameMoveByMove)
                {
-                    <input type='text' @bind='UserPageNavigation.thing'>
-                    <p>@UserPageNavigation.error</p>
+                    <input type='text' @bind='UserPageNavigation.UserInput'>
+                    <p>@UserPageNavigation.ErrorMessage</p>
                     <button @onclick='UserPageNavigation.oneMove'>Enter move</button>
                     <p></p>
-                    if (user.currentGame.Count > 0)
+                    if (user.CurrentGame.Count > 0)
                     {
                          <button @onclick='UserPageNavigation.appendGame'>Game finished</button>
                     }
                     <p></p>
                     <button @onclick='UserPageNavigation.backToSingleUser'>Back to user menu</button>
                }
-               if (UserPageNavigation.entireGame)
+               if (UserPageNavigation.AddEntireGame)
                {
                     <p>Enter the entire game into the text box</p>
                     <p></p>
-                    <input type='text' @bind='UserPageNavigation.thing'>
-                    <p>@UserPageNavigation.error</p>
+                    <input type='text' @bind='UserPageNavigation.UserInput'>
+                    <p>@UserPageNavigation.ErrorMessage</p>
                     <button @onclick='UserPageNavigation.appendWholeGame'>Add game</button>
                     <p></p>
                     <button @onclick='UserPageNavigation.backToSingleUser'>Back to user menu</button>
@@ -88,7 +88,7 @@
      <button @onclick='UserPageNavigation.hide'>Show all users</button>
 }
 <p></p>
-@if (UserPageNavigation.gameadd)
+@if (UserPageNavigation.AddCurrentGame)
 {
      <button @onclick='UserPageNavigation.noNewGame'>Save new playerdata</button>
 }

@@ -1,34 +1,33 @@
 namespace lib;
 public static class UserPageNavigation
 {
-    public static string thing;
-    public static bool options = false;
-    public static string error = null;
-    public static bool gameShow = false;
-    public static bool singleUser = false;
-    public static bool moveByMove = false;
-    public static int playerSelection;
-    public static bool entireGame = false;
-    public static bool gameadd = false;
-    public static string game;
+    public static string UserInput;
+    public static bool ShowNavButtons = false;
+    public static string ErrorMessage = null;
+    public static bool GameShow = false;
+    public static bool ShowSingleUser = false;
+    public static bool AddGameMoveByMove = false;
+    public static int SelectedPlayer;
+    public static bool AddEntireGame = false;
+    public static bool AddCurrentGame = false;
     public static void select()
     {
         try
         {
-            playerSelection = Int32.Parse(thing);
-            if (playerSelection <= playerData.totalUserCount)
+            SelectedPlayer = Int32.Parse(UserInput);
+            if (SelectedPlayer <= PlayerData.TotalUserCount)
             {
-                error = null;
-                singleUser = true;
-                options = true;
-                moveByMove = false;
-                gameShow = false;
-                entireGame = false;
+                ErrorMessage = null;
+                ShowSingleUser = true;
+                ShowNavButtons = true;
+                AddGameMoveByMove = false;
+                GameShow = false;
+                AddEntireGame = false;
             }
             else
             {
-                error = "That number is too big dude";
-                thing = "";
+                ErrorMessage = "That number is too big dude";
+                UserInput = "";
             }
         }
         catch
@@ -38,61 +37,61 @@ public static class UserPageNavigation
     }
     public static void show()
     {
-        gameShow = true;
-        options = false;
-        error = "";
+        GameShow = true;
+        ShowNavButtons = false;
+        ErrorMessage = "";
     }
     public static void hide()
     {
-        error = "";
-        singleUser = false;
-        thing = "";
+        ErrorMessage = "";
+        ShowSingleUser = false;
+        UserInput = "";
     }
     public static void singleMove()
     {
-        thing = "";
-        moveByMove = true;
-        gameShow = false;
-        entireGame = false;
-        options = false;
-        error = "";
+        UserInput = "";
+        AddGameMoveByMove = true;
+        GameShow = false;
+        AddEntireGame = false;
+        ShowNavButtons = false;
+        ErrorMessage = "";
     }
     public static void entireMove()
     {
-        thing = "";
-        entireGame = true;
-        gameShow = false;
-        moveByMove = false;
-        options = false;
-        error = "";
+        UserInput = "";
+        AddEntireGame = true;
+        GameShow = false;
+        AddGameMoveByMove = false;
+        ShowNavButtons = false;
+        ErrorMessage = "";
     }
     public static void backToSingleUser()
     {
-        thing = "";
-        options = true;
-        moveByMove = false;
-        gameShow = false;
-        entireGame = false;
-        error = "";
+        UserInput = "";
+        ShowNavButtons = true;
+        AddGameMoveByMove = false;
+        GameShow = false;
+        AddEntireGame = false;
+        ErrorMessage = "";
     }
     public static void noNewGame()
     {
-        gameadd = false;
-        players.SavePlayers();
+        AddCurrentGame = false;
+        Players.SavePlayers();
     }
     public static void oneMove()
     {
-        if (thing != "" && thing != null)
+        if (UserInput != "" && UserInput != null)
         {
-            foreach (playerData user in players.playerBase)
+            foreach (PlayerData user in Players.PlayerBase)
             {
-                if (user.playerCode == playerSelection)
+                if (user.PlayerCode == SelectedPlayer)
                 {
-                    user.addMove(thing);
+                    user.addMove(UserInput);
                 }
             }
-            thing = "";
-            error = "Move successfully entered";
+            UserInput = "";
+            ErrorMessage = "Move successfully entered";
         }
         else
         {
@@ -101,30 +100,30 @@ public static class UserPageNavigation
     }
     public static void appendGame()
     {
-        foreach (playerData user in players.playerBase)
+        foreach (PlayerData user in Players.PlayerBase)
         {
-            if (user.playerCode == playerSelection)
+            if (user.PlayerCode == SelectedPlayer)
             {
                 user.addGame();
             }
         }
-        error = "Game successfully entered";
-        gameadd = true;
+        ErrorMessage = "Game successfully entered";
+        AddCurrentGame = true;
     }
     public static void appendWholeGame()
     {
-        if (thing != "" && thing != null)
+        if (UserInput != "" && UserInput != null)
         {
-            foreach (playerData user in players.playerBase)
+            foreach (PlayerData user in Players.PlayerBase)
             {
-                if (user.playerCode == playerSelection)
+                if (user.PlayerCode == SelectedPlayer)
                 {
-                    user.WholeGame(thing);
-                    thing = "";
-                    error = "Game successfully entered";
+                    user.WholeGame(UserInput);
+                    UserInput = "";
+                    ErrorMessage = "Game successfully entered";
                 }
             }
-            gameadd = true;
+            AddCurrentGame = true;
         }
         else
         {
@@ -137,10 +136,10 @@ public static class UserPageNavigation
         int i = generator.Next(0, 4);
         switch (i)
         {
-            case 0: error = "I really don't like it when you give me empty values"; break;
-            case 1: error = "Oi, bro, thats empty"; break;
-            case 2: error = "Nah man, that's still empty"; break;
-            case 3: error = "Bro, I set up a whole random number generator for this. This is a pain. Don't give me empty values"; break;
+            case 0: ErrorMessage = "I really don't like it when you give me empty values"; break;
+            case 1: ErrorMessage = "Oi, bro, thats empty"; break;
+            case 2: ErrorMessage = "Nah man, that's still empty"; break;
+            case 3: ErrorMessage = "Bro, I set up a whole random number generator for this. This is a pain. Don't give me empty values"; break;
         }
     }
 }
