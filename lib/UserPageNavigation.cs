@@ -9,13 +9,12 @@ public static class UserPageNavigation
     public static bool AddGameMoveByMove = false;
     public static int SelectedPlayer;
     public static bool AddEntireGame = false;
-    public static bool AddCurrentGame = false;
     public static void select()
     {
         try
         {
             SelectedPlayer = Int32.Parse(UserInput);
-            if (SelectedPlayer <= PlayerData.TotalUserCount)
+            if (SelectedPlayer < PlayerData.TotalUserCount && SelectedPlayer >= 0)
             {
                 ErrorMessage = null;
                 ShowSingleUser = true;
@@ -26,7 +25,7 @@ public static class UserPageNavigation
             }
             else
             {
-                ErrorMessage = "That number is too big dude";
+                ErrorMessage = "That number isn't valid";
                 UserInput = "";
             }
         }
@@ -74,11 +73,6 @@ public static class UserPageNavigation
         AddEntireGame = false;
         ErrorMessage = "";
     }
-    public static void noNewGame()
-    {
-        AddCurrentGame = false;
-        Players.SavePlayers();
-    }
     public static void oneMove()
     {
         if (UserInput != "" && UserInput != null)
@@ -105,10 +99,10 @@ public static class UserPageNavigation
             if (user.PlayerCode == SelectedPlayer)
             {
                 user.addGame();
+                Players.SavePlayers();
             }
         }
         ErrorMessage = "Game successfully entered";
-        AddCurrentGame = true;
     }
     public static void appendWholeGame()
     {
@@ -121,9 +115,9 @@ public static class UserPageNavigation
                     user.WholeGame(UserInput);
                     UserInput = "";
                     ErrorMessage = "Game successfully entered";
+                    Players.SavePlayers();
                 }
             }
-            AddCurrentGame = true;
         }
         else
         {

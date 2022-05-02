@@ -9,10 +9,6 @@
             Players.RecoverPlayers();
     }
 }
-@if (Players.PlayerBase.Count > 0)
-{
-    Players.DisplayPlayers = true;
-}
 
 
 <PageTitle>Index</PageTitle>
@@ -33,11 +29,6 @@
             <path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z" />
         </svg> Users
     </a></button>
-}
-<p></p>
-@if (Players.NewPlayer)
-{
-    <button @onclick="Players.SavePlayers">Store all users</button>
 }
 <p></p>
 @if (Players.PlayerBase.Count > 0)

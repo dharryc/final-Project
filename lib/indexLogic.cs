@@ -14,16 +14,29 @@ public static class indexLogic
         {
             if (!RepeatUser)
             {
-                if (UserName.Length > 2)
+                if(!UserName.Contains(" "))
                 {
-                    Players.Add(new PlayerData(UserName), UserName);
-                    Players.ErrorMessage = "Username successfully entered!";
-                    Players.NewPlayer = true;
-                    UserName = "";
+                    if (UserName.Length > 2)
+                    {
+                        Players.Add(new PlayerData(UserName), UserName);
+                        Players.ErrorMessage = "Username successfully entered!";
+                        Players.NewPlayer = true;
+                        UserName = "";
+                        Players.SavePlayers();
+                        if (Players.PlayerBase.Count > 0)
+                        {
+                            Players.DisplayPlayers = true;
+                        }
+                    }
+                    else
+                    {
+                        Players.ErrorMessage = "That name is too short";
+                        UserName = "";
+                    }
                 }
                 else
                 {
-                    Players.ErrorMessage = "That name is too short";
+                    Players.ErrorMessage = "Please enter a username with no spaces.";
                     UserName = "";
                 }
             }
@@ -42,15 +55,9 @@ public static class indexLogic
     {
         for (int i = 0; i < PlayerData.TotalUserCount; i++)
         {
-            for (int j = 0; i < PlayerData.TotalUserCount; i++)
+            if (UserName == Players.PlayerBase[i].UserName)
             {
-                if (i != j)
-                {
-                    if (Players.PlayerBase[j].UserName == Players.PlayerBase[i].UserName)
-                    {
-                        RepeatUser = true;
-                    }
-                }
+                RepeatUser = true;
             }
         }
     }

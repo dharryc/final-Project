@@ -1,5 +1,7 @@
 @page "/users"
 @using lib;
+@inject NavigationManager NavManager
+@using Microsoft.AspNetCore.Components
 
 @code
 {
@@ -17,78 +19,90 @@
                UserPageNavigation.ShowNavButtons = false;
           }
      }
-}
-@if (!UserPageNavigation.ShowSingleUser)
-{
-     <h1>Users</h1>
-     foreach (PlayerData user in Players.PlayerBase)
+     public void home()
      {
-          <p>@user.PlayerCode) @user.UserName </p>
+          UserPageNavigation.ErrorMessage = "";
+          NavManager.NavigateTo("/");
      }
-     <p></p>
-     <input type='text' @bind='UserPageNavigation.UserInput'>
-     <p>@UserPageNavigation.ErrorMessage</p>
-     <p>Enter the user number to select the user</p>
-     <button @onclick='UserPageNavigation.select'>Select user</button>
 }
-@if (UserPageNavigation.ShowSingleUser)
+@if (PlayerData.TotalUserCount > 0)
 {
-     foreach (PlayerData user in Players.PlayerBase)
+     if (!UserPageNavigation.ShowSingleUser)
      {
-          if (user.PlayerCode == UserPageNavigation.SelectedPlayer)
+          <h1>Users</h1>
+          foreach (PlayerData user in Players.PlayerBase)
           {
-               <h1>@user.UserName</h1>
-               if (UserPageNavigation.ShowNavButtons)
+               <p>@user.PlayerCode) @user.UserName </p>
+          }
+          <p>Enter the user number to select the user</p>
+          <input type='text' @bind='UserPageNavigation.UserInput'>
+          <p></p>
+          <p>@UserPageNavigation.ErrorMessage</p>
+          <button @onclick='UserPageNavigation.select'>Select user</button>
+     }
+     if (UserPageNavigation.ShowSingleUser)
+     {
+          foreach (PlayerData user in Players.PlayerBase)
+          {
+               if (user.PlayerCode == UserPageNavigation.SelectedPlayer)
                {
-                    if (user.GameCount > 0)
+                    <h1>@user.UserName</h1>
+                    if (UserPageNavigation.ShowNavButtons)
                     {
-                         <button @onclick='UserPageNavigation.show'>Show all games</button>
-                    }
-                    <p></p>
-                    <button @onclick='UserPageNavigation.singleMove'>Add game move at a time</button>
-                    <p></p>
-                    <button @onclick='UserPageNavigation.entireMove'>Add entire game</button>
-               }
-               if (UserPageNavigation.GameShow)
-               {
-                    <p>Showing all @user.UserName's games</p>
-                    for (int i = 0; i < user.GameCount; i++)
-                    {
-                         <p>@user.GetGameAt(i)</p>
+                         if (user.GameCount > 0)
+                         {
+                              <button @onclick='UserPageNavigation.show'>Show all games</button>
+                         }
                          <p></p>
+                         <button @onclick='UserPageNavigation.singleMove'>Add game move at a time</button>
+                         <p></p>
+                         <button @onclick='UserPageNavigation.entireMove'>Add entire game</button>
                     }
-                    <button @onclick='UserPageNavigation.backToSingleUser'>Back to user menu</button>
-               }
-               if (UserPageNavigation.AddGameMoveByMove)
-               {
-                    <input type='text' @bind='UserPageNavigation.UserInput'>
-                    <p>@UserPageNavigation.ErrorMessage</p>
-                    <button @onclick='UserPageNavigation.oneMove'>Enter move</button>
-                    <p></p>
-                    if (user.CurrentGame.Count > 0)
+                    if (UserPageNavigation.GameShow)
                     {
-                         <button @onclick='UserPageNavigation.appendGame'>Game finished</button>
+                         <p>Showing all @user.UserName's games</p>
+                         for (int i = 0; i < user.GameCount; i++)
+                         {
+                              <p>@user.GetGameAt(i)</p>
+                              <p></p>
+                         }
+                         <button @onclick='UserPageNavigation.backToSingleUser'>Back to user menu</button>
                     }
-                    <p></p>
-                    <button @onclick='UserPageNavigation.backToSingleUser'>Back to user menu</button>
-               }
-               if (UserPageNavigation.AddEntireGame)
-               {
-                    <p>Enter the entire game into the text box</p>
-                    <p></p>
-                    <input type='text' @bind='UserPageNavigation.UserInput'>
-                    <p>@UserPageNavigation.ErrorMessage</p>
-                    <button @onclick='UserPageNavigation.appendWholeGame'>Add game</button>
-                    <p></p>
-                    <button @onclick='UserPageNavigation.backToSingleUser'>Back to user menu</button>
+                    if (UserPageNavigation.AddGameMoveByMove)
+                    {
+                         <input type='text' @bind='UserPageNavigation.UserInput'>
+                         <p>@UserPageNavigation.ErrorMessage</p>
+                         <button @onclick='UserPageNavigation.oneMove'>Enter move</button>
+                         <p></p>
+                         if (user.CurrentGame.Count > 0)
+                         {
+                              <button @onclick='UserPageNavigation.appendGame'>Game finished</button>
+                         }
+                         <p></p>
+                         <button @onclick='UserPageNavigation.backToSingleUser'>Back to user menu</button>
+                    }
+                    if (UserPageNavigation.AddEntireGame)
+                    {
+                         <p>Enter the entire game into the text box</p>
+                         <p></p>
+                         <input type='text' @bind='UserPageNavigation.UserInput'>
+                         <p>@UserPageNavigation.ErrorMessage</p>
+                         <button @onclick='UserPageNavigation.appendWholeGame'>Add game</button>
+                         <p></p>
+                         <button @onclick='UserPageNavigation.backToSingleUser'>Back to user menu</button>
+                    }
                }
           }
+          <p></p>
+          if (Players.PlayerBase.Count > 1)
+          {
+               <button @onclick='UserPageNavigation.hide'>Show all users</button>
+          }
      }
-     <p></p>
-     <button @onclick='UserPageNavigation.hide'>Show all users</button>
+}
+else
+{
+     <p>There aren't any users right now. Please return to the home page and enter a user.</p>
 }
 <p></p>
-@if (UserPageNavigation.AddCurrentGame)
-{
-     <button @onclick='UserPageNavigation.noNewGame'>Save new playerdata</button>
-}
+<button @onclick='home'>Home</button>
